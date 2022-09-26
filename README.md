@@ -6,12 +6,12 @@ ______
 Run the following commands to use locally:
 
 ```
-$ git clone https://github.com/NNbaur/python-project-lvl4 
+$ git clone https://github.com/NNbaur/blog
 ```
 or
 
 ```
-pip install git+https://github.com/NNbaur/python-project-lvl4.git
+pip install git+https://github.com/NNbaur/blog.git
 ```
 
 python manage.py runserver
