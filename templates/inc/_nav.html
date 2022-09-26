@@ -1,0 +1,19 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"><a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Главная</a></li>
+            {% if request.user.is_authenticated %}
+            <li class="nav-item"><a class="nav-link" href="{% url 'add_news' %}">Добавить новость</a></li>
+            <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Обратная связь</a></li>
+            {% endif %}
+        </ul>
+        <span class="navbar-text">
+            {% if request.user.is_authenticated %}
+                Вы вошли, как {{ user.username }} | <a href="{% url 'logout' %}">Выйти</a>
+            {% else %}
+                <a href="{% url 'register' %}">Зарегистрироваться</a> | <a href="{% url 'login' %}">Логин</a>
+            {% endif %}
+        </span>
+    </div>
+</nav>

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load news_tags %}
+{% load static %}
+
+{% block content %}
+	<div class="container-fluid">
+		<div class="row fh5co-post-entry single-entry">
+			<article class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-8 col-sm-offset-2 col-xs-12 col-xs-offset-0">
+				{% if news_item.photo %}
+				<figure class="animate-box">
+					<img src="{{ news_item.photo.url }}" alt="Image" style="margin-left: auto; margin-right: auto;" class="img-responsive">
+				</figure>
+				{% else %}
+				<figure class="animate-box">
+					<img src="{% static 'images/default.jpg' %}" alt="Image" width="350" height="350" style="margin-left: auto; margin-right: auto;" class="img-responsive">
+				</figure>
+				{% endif %}
+				<span class="fh5co-meta animate-box"><a href="{{ news_item.category.get_absolute_url }}">{{ news_item.category }}</a></span>
+				<h2 class="fh5co-article-title animate-box"><a href="{{ news_item.get_absolute_url}}">{{ news_item.title }}</a></h2>
+				<span class="fh5co-meta fh5co-date animate-box">{{ news_item.created_at|date:"d-m-Y H:i" }}</span>
+				<div class="col-md-12 animate-box">
+							<p>{{ news_item.content|safe }}</p>
+				</div>
+			</article>
+		</div>
+	</div>
+{% endblock %}

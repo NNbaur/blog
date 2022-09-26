@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} {{ title }} {% endblock %}
+
+{% block content %}
+	<div style="text-align: center; font-size: 12px; opacity: 30%;">{{ mixin_prop }}</div>
+	<div class="container-fluid">
+		<div class="row fh5co-post-entry">
+			{% for item in news %}
+			<article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
+				{% if item.photo %}
+				<figure>
+					<a href="{{ item.get_absolute_url }}"><img style="border: 2px solid #000000;" src="{{ item.photo.url }}" width="350" height="305" alt="Image"></a>
+				</figure>
+				{% else %}
+				<figure>
+					<a href="{{ item.get_absolute_url }}"><img style="border: 2px solid #000000;" src="{% static 'images/default.jpg' %}" width="350" height="305" alt="Image"></a>
+				</figure>
+				{% endif %}
+				<span class="fh5co-meta"><a href="{{ item.category.get_absolute_url }}">{{ item.category }}</a></span>
+				<h2 class="fh5co-article-title"><a href="{{ item.get_absolute_url }}">{{ item.title }}</a></h2>
+				<span class="fh5co-meta fh5co-date">{{ item.created_at|date:"d-m-Y" }}</span>
+			</article>
+			{% endfor %}
+		</div>
+	</div>
+{% endblock %}

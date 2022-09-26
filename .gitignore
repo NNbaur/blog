@@ -1,0 +1,12 @@
+*.egg-info
+__pycache__
+dist/
+*.pyc
+.venv/
+.pytest_cache/
+.vim
+*.swp
+.env
+db.sqlite3
+django_cache/
+.idea/
