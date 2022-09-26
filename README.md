@@ -1,5 +1,9 @@
 # NewsBlog - local version(26.09.2021) - in process ...
 
+### Description
+______
+NewsBlog - a platform for posting news, personal articles, entertaining stories and any interesting information in the format of small blogs.
+
 ### Local usage
 ______
 
