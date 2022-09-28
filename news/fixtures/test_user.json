@@ -1,0 +1,16 @@
+[
+{
+    "model": "auth.User",
+    "pk": 1,
+    "fields": {
+        "password": "Passwordtest123ZZ",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "username_test1",
+        "email": "usertest@gmail.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2022-07-07T17:13:30.163Z"
+    }
+}
+]
