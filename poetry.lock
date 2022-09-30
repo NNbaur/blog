@@ -10,19 +10,8 @@ python-versions = ">=3.7"
 tests = ["pytest", "pytest-asyncio", "mypy (>=0.800)"]
 
 [[package]]
-name = "captcha"
-version = "0.4"
-description = "A captcha library that generates audio and image CAPTCHAs."
-category = "main"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-Pillow = "*"
-
-[[package]]
 name = "coverage"
-version = "6.4.4"
+version = "6.5.0"
 description = "Code coverage measurement for Python"
 category = "main"
 optional = false
@@ -207,11 +196,10 @@ brotli = ["brotli"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "c34a47dfd5e6fa13b6fadbac20a7fc5bb566613fcbe813ea92f6e2fd4379e533"
+content-hash = "9772031e2f90c07eb614ddf64e6cf2503becdc33054f5c877e3e1fd896ca172d"
 
 [metadata.files]
 asgiref = []
-captcha = []
 coverage = []
 dj-database-url = []
 django = []

@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from captcha.models import CaptchaStore
+from news.models import News
 
 
 class UserTestCase(TestCase):
@@ -105,6 +106,71 @@ class ContactTestCase(TestCase):
         response = self.client.post(reverse('contact'), contact_invalid)
         messages = list(response.context['messages'])
         self.assertEqual(str(messages[0]), 'Ошибка проверки')
+
+
+class NewsTestCase(TestCase):
+    fixtures = [
+        'test_user.json',
+        'test_category.json'
+    ]
+
+    def setUp(self):
+        # simulate user logging for auth.system
+        user_logged = get_user_model().objects.first()
+        self.client.force_login(user_logged)
+
+    def test_news_add(self):
+        # check response status, template
+        response = self.client.get(reverse('add_news'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name='news/add_news.html')
+
+        # check add news
+        news1 = {
+            'title': 'test_news1',
+            'content': 'test_content1',
+            'category': 1
+        }
+        response = self.client.post(reverse('add_news'), news1)
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, '/news/1/')
+        # check user added in database
+        news = News.objects.get(title=news1['title'])
+        self.assertEqual(news.title, 'test_news1')
+        self.assertEqual(get_user_model().objects.count(), 1)
+        # check validation
+        news2 = {
+            'title': '2test_news',
+            'content': 'test_content2',
+            'category': 1
+        }
+        response = self.client.post(reverse('add_news'), news2)
+        self.assertFormError(response, 'form', 'title', 'Название не должно начинаться с цифры')
+
+    def test_news_category(self):
+        news1 = {
+            'title': 'test_news1',
+            'content': 'test_content1',
+            'category': 1
+        }
+        news2 = {
+            'title': 'test_news2',
+            'content': 'test_content2',
+            'category': 2
+        }
+        news3 = {
+            'title': 'test_news3',
+            'content': 'test_content3',
+            'category': 2
+        }
+        self.client.post(reverse('add_news'), news1)
+        self.client.post(reverse('add_news'), news2)
+        self.client.post(reverse('add_news'), news3)
+        response = self.client.get('/category/1/')
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, template_name='news/list_of_news.html')
+        self.assertEqual(len(News.objects.filter(category_id=1)), 1)
+        self.assertEqual(len(News.objects.filter(category_id=2)), 2)
 
 
 

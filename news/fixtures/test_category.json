@@ -1,0 +1,17 @@
+[
+{
+    "model": "news.Category",
+    "pk": 1,
+    "fields": {
+        "title": "test_category1"
+    }
+},
+  {
+    "model": "news.Category",
+    "pk": 2,
+    "fields": {
+        "title": "test_category2"
+    }
+}
+
+]
