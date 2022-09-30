@@ -12,6 +12,10 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import find_dotenv, load_dotenv
+import dj_database_url
+
+load_dotenv(find_dotenv())
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,10 +24,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-&+hjo24psg#@y02=jqo9uxi^+e5$94r+laqev*ge=7+e2m)4h&'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = (os.getenv('DEBUG') != 'False') is True
 
 ALLOWED_HOSTS = []
 
@@ -41,9 +45,11 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'captcha',
     'news.apps.NewsConfig',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -81,13 +87,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-        # 'ENGINE': 'django.db.backends.mysql',
-        # 'NAME': 'django',
-        # 'USER': 'root',
-        # 'PASSWORD': '',
-        # 'HOST': 'localhost',
     }
 }
+
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -127,6 +131,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'mysite/static')
 ]
 
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -150,7 +156,6 @@ CKEDITOR_UPLOAD_PATH = 'uploads/'
 CKEDITOR_CONFIGS = {
     'default': {
         'skin': 'moono-lisa',
-        # 'skin': 'office2013',
         'toolbar_Basic': [
             ['Source', '-', 'Bold', 'Italic']
         ],
@@ -185,13 +190,6 @@ CKEDITOR_CONFIGS = {
             ]},
         ],
         'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
-        # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
-        # 'height': 291,
-        # 'width': '100%',
-        # 'filebrowserWindowHeight': 725,
-        # 'filebrowserWindowWidth': 940,
-        # 'toolbarCanCollapse': True,
-        # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
             'uploadimage',  # the upload image feature
