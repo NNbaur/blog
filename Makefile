@@ -20,4 +20,4 @@ collect:
 	poetry run python3 manage.py collectstatic
 
 run:
-	poetry run python3 manage.py runserver 8080
+	poetry run python3 manage.py runserver

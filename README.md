@@ -1,4 +1,4 @@
-# NewsBlog - local version(26.09.2021) - in process ...
+# NewsBlog
 
 ### Description
 ______
@@ -18,6 +18,10 @@ or
 pip install git+https://github.com/NNbaur/blog.git
 ```
 
-python manage.py runserver
+python3 manage.py runserver
+
+or 
+
+make run
 
 The app will be available at http://127.0.0.1:8000/
