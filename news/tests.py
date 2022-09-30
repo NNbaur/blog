@@ -134,7 +134,7 @@ class NewsTestCase(TestCase):
         response = self.client.post(reverse('add_news'), news1)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, '/news/1/')
-        # check user added in database
+        # check news added in database
         news = News.objects.get(title=news1['title'])
         self.assertEqual(news.title, 'test_news1')
         self.assertEqual(get_user_model().objects.count(), 1)
@@ -148,6 +148,7 @@ class NewsTestCase(TestCase):
         self.assertFormError(response, 'form', 'title', 'Название не должно начинаться с цифры')
 
     def test_news_category(self):
+        # add news by categories
         news1 = {
             'title': 'test_news1',
             'content': 'test_content1',
@@ -166,14 +167,10 @@ class NewsTestCase(TestCase):
         self.client.post(reverse('add_news'), news1)
         self.client.post(reverse('add_news'), news2)
         self.client.post(reverse('add_news'), news3)
+        # check status code and template of categories
         response = self.client.get('/category/1/')
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, template_name='news/list_of_news.html')
+        # check news added correctly by categories in db
         self.assertEqual(len(News.objects.filter(category_id=1)), 1)
         self.assertEqual(len(News.objects.filter(category_id=2)), 2)
-
-
-
-
-
-
